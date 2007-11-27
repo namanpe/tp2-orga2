@@ -1,0 +1,34 @@
+
+
+la funcion recibe en esi: puntero a 4 bytes de la matriz orginal
+	edi: puntero a 4 bytes de la matriz destino.
+
+	esi -> xxAABBxx
+	
+la funcion procesa los 2 bytes centrales y los guarda en la posicion
+correspondiente (edi + 1)
+ 
+Si esta es la matriz y esi y edi apuntan de la sig. manera
+Matriz origen:
+      dddddddd
+ esi> ddAABBdd 
+      dddddddd
+
+Matriz destino:
+      pppppppp
+ edi> ppuuuuuu
+      uuuuuuuu
+
+la funcion procesa sólo AA y BB, y retorna en la matriz destino A y B procesados.
+Matriz destino resultante:
+	pppppppp
+	ppppppuu
+	uuuuuuuu
+
+
+Donde : dd son datos en el origen
+	pp son datos ya procesados en destino
+	uu son datos sin proesar en destino.
+
+para seguir recorriendo simplemente hay que incrementar en 2 unidades a esi y a edi. (tener cuidado cuando se acaba la fila).
+
