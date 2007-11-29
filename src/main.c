@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void monocromatizar(char*, int, int, char);
+
+void _monocromatizar(char*, char*, int, int)
 void realzarBordes(char*, int, int, char*, char*, char*);
 void realzarBordesRoberts(char*, int, int, char*, char*, char*);
 void umbralizar(char*, int, int, char*, char*, char*);
@@ -55,7 +56,7 @@ void monocromatizarPromedio(char *argv[]){
 		fseek(pFile, 22, SEEK_SET);
 		fread(&j, 1, 4, pFile); // Leo el ancho
 
-		monocromatizar(fileSalida + 54, i, j, 'p');
+		_monocromatizar(archivoEntrada + 54, fileSalida + 54, i, j);
 
 	}
 
@@ -76,20 +77,6 @@ void displayHelp(char *a){
         printf("u <umbral inferior> <umbral superior> (Umbralizar)\n");
         printf("m1 (Monocromatizar con promedio)\n");
         printf("m2 (Monocromatizar con maximo)\n");
-}
-
-
-void displayHelp(char *a){
-	printf("Ayuda... \n");
-	printf("%s <modos> <archivo entrada> <archivo salida>\n\n",a);
-	printf("Los modos disponibles son los siguientes:\n");
-	printf("r1 (Roberts)\n");
-	printf("r2 (Prewitt)\n");
-	printf("r3 (Sobel)\n");
-	printf("u <umbral inferior> <umbral superior> (Umbralizar)\n");
-	printf("m1 (Monocromatizar con promedio)\n");
-	printf("m2 (Monocromatizar con maximo)\n");
-}
 }
 
 int main(int argc, char *argv[]){
@@ -113,6 +100,7 @@ int main(int argc, char *argv[]){
 			} else {
 					displayHelp(argv[0]);
 			}
+	}
 
 	return 0;
 
