@@ -58,7 +58,12 @@ _realzarBordes:
 	paddw mm1, mm5
 	paddw mm1, mm6		; grosa suma
 
+	packuswb mm1, mm1
 
+	movd eax, mm1
+	;inc edi
+	mov [edi + 1], ax
+ 
 
 	pop esi
 	pop edi
