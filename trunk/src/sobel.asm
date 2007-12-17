@@ -1,9 +1,9 @@
 ;void prewitt(char*, char*, int, int)
-global _prewitt
+global _sobel
 
 section .text
 
-_prewitt:
+_sobel:
 
 	push ebp
 	mov ebp, esp
@@ -18,6 +18,15 @@ _prewitt:
 	
 	mov ebp, edx
 
+	;--- mm4 mascara.------
+	pxor mm4, mm4
+	mov ax, 01h
+	pinsrw mm4, ax, 0
+	pinsrw mm4, ax, 3
+	inc ax
+	pinsrw mm4, ax, 1
+	;---------------------------
+	
 	;--- mm5 mascara.------
 	pxor mm5, mm5
 	mov ax, 0FFFFh
@@ -61,25 +70,30 @@ _prewitt:
 			movd mm2, [esi + 2 * ebp]		; mm2 = |0|0|0|0|p1|p2|p3|p4|
 
 			punpcklbw mm0, mm7				; mm0 = |0|p1|0|p2|0|p3|0|p4|
-			punpcklbw mm1, mm7				; mm1 = |0|R|0|G|0|B|0|X|
-			punpcklbw mm2, mm7				; mm2 = |0|R|0|G|0|B|0|X|
+			punpcklbw mm1, mm7				; mm1 = |0|p1|0|p2|0|p3|0|p4|
+			punpcklbw mm2, mm7				; mm2 = |0|p1|0|p2|0|p3|0|p4|
 			
 			pxor mm3, mm3
 			psubw mm3, mm0
 			paddw mm3, mm2
 			
 			paddw mm0, mm1
+			paddw mm0, mm1
 			paddw mm0, mm2
 			
 			;----------------------------
-			movq mm1, mm0
+			movq mm1, mm0		;
+			movq mm2, mm3		;
 			
-			pmullw mm0, mm5
+			pmullw mm0, mm5		;aplico la mascara
+			pmullw mm3, mm4		;aplico la mascara
 			psubw mm0, mm3
 
-			psrlq mm1, 16
-			psrlq mm3, 16			
-			pmullw mm1, mm5
+			psrlq mm1, 16		;hago un shitf para procesar el segundo pixel
+			psrlq mm3, 16		;hago un shitf para procesar el segundo pixel
+			
+			pmullw mm1, mm5		;aplico la mascara
+			pmullw mm2, mm4		;aplico la mascara
 			psubw mm1, mm3
 
 			pmaddwd mm0, mm6
