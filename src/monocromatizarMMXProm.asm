@@ -40,16 +40,18 @@ _monocromatizarP:
 			movd eax, mm0
 			psrlq mm0, 48
 			movd ecx, mm0
-			mov ah, cl
+			
+			mov ah, al
+			mov ch, cl
+			
+			;mov ah, cl
 
 			;mov [edi], ax
 			
-			mov [edi], al
-			mov [edi + 1], al
+			mov [edi], ax
 			mov [edi + 2], al
-			mov [edi + 3], ah
-			mov [edi + 4], ah
-			mov [edi + 5], ah
+			mov [edi + 3], cx
+			mov [edi + 5], cl
 			add esi, 6
 			add edi, 6
 

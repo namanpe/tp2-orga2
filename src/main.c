@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-void _monocromatizar(char*, char*, int, int)
+void _monocromatizar(char*, char*, int, int);
 void realzarBordes(char*, int, int, char*, char*, char*);
 void realzarBordesRoberts(char*, int, int, char*, char*, char*);
 void umbralizar(char*, int, int, char*, char*, char*);
